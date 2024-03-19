@@ -23,3 +23,20 @@ Para ejecutar el código paralelizado basta con ejecutar el siguien SBATCH
 ```
 sbatch postmansort.sbatch
 ```
+### Resultados
+Para la prueba de ordenamiento se usaron N=100000 numeros del 0 al 10000, los cuales se seleccionaron de manera randomica con la semilla de time y
+los resultados fueron los siguientes:
+#### Secuencial
+<img style="height:200px; width:1000px"  src="./images/secuencial.png"/>
+
+#### Paralelo
+<img style="height:200px; width:1000px"  src="./images/paralelo.png"/>
+
+En paralelo se optimizó el for mas interno que organizaba los numeros de cada uno de los buckets, mediante un `schedule` con un tamaño dinamico de hilos.
+### Conclusiones
+<ul>
+  <li>Si bien el paralelismo optimiza los tiempos de ejecución de los programas, no es la solucion mas adecuada para ciertos tamaños. Por ejemplo: para pocos datos </li>
+  <li>Se optimizó el tiempo de ejecución mediante las librerías de OpenMP para un numero bastante considerado de datos.</li>
+  <li>Este algoritmo depende en gran medida de agrupar datos de la misma jerarquía lo que hace dificil la optimización del  mismo, se usaron otras herramientas de la librería 
+  para mejorar estos tiempo sin embargo el vector acaba parcialmente ordenado en ciertas posiciones.</li>
+</ul>
