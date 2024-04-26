@@ -1,5 +1,5 @@
 # Integrantes:
-Sebastian Gian
+Gian Sebastian Mier Bello - 2210073
 
 Santiago González Flores - 2200165
 
@@ -40,3 +40,43 @@ los resultados con los correspondientes comandos son los siguientes:
 
 #### Binary Search MPI
 <img style="height:200px; width:1000px"  src="./images/BinarySearch_MPI.png"/>
+
+## Postman Sort:
+
+Este código es la implementación del algoritmo Postman Sort que una variante del Bucket Sort, en este caso se paralelizo con la librería de MPI.
+
+Para ejecutar este código es necesario entrar a guaneExa, luego hacer una reserva interactiva de 128 nucleos.
+```
+ssh guaneExa
+srun -n 128 --pty /bin/bash
+```
+Tiene que entrar en la carpeta PostmanSort/ despues para compilarlo  se debe cargar la librería MPI y compilarlo:
+```
+module load openmpi/5.0.1
+make clean
+make all
+```
+Finalmente para correrlo:
+```
+mpirun -np 128 mpi_postmansort
+```
+### Explicación:
+Para paralelizar este algoritmo con MPI, primero el worker raíz inicializo el array e inicio la primera etapa del algoritmo que es un ordenamiento basado en el numero de digitos, luego se difundieron las variables necesarias para el algoritmo (n) a tráves un broadcast, finalmente es necesario asignar una parte equitativa entre el numero de procesos, esto es posible gracias al MPI_Scatter una vez que  cada worker haya ejecutado la segunda etapa de ordenamiento de su parte del array se recolecta estos subarrays con MPI_Gather y se toma el tiempo del worker que mas le haya tomado ordenar el array que sería el tomado como referencia de tiempo total.
+
+### Resultados
+Se ejecutaron con 100000 numeros.
+
+#### PostmanSort Secuencial
+<img style="height:200px; width:1000px"  src="./images/postmansort.png"/>
+
+#### PostmanSort OpenMP
+<img style="height:200px; width:1000px"  src="./images/omp_postmansort.png"/>
+
+#### PostmanSort MPI
+<img style="height:200px; width:1000px"  src="./images/mpi_postmansort_1.png"/>
+<img style="height:5Opx; width:600px"  src="./images/mpi_postmansort_2.png"/>
+
+### Conclusiones
+* Si bien OpenMP es mas versátil a la hora de ejecutarse en una sola máquina, podemos evidenciar en este caso que al escalar un programa en MPI tiene mejores resultados que OpenMP, ya que al ejecutarlo con pocos workers la sincronización y la comunicación afectan en el rendimiento.
+* Con las bandera de optimización -Ofast se redujeron mas numero de instrucciones que en -O3 y con la ayuda de -Wall se arreglaron los warnings del programa. 
+
