@@ -77,6 +77,6 @@ Se ejecutaron con 100000 numeros.
 <img style="height:5Opx; width:600px"  src="./images/mpi_postmansort_2.png"/>
 
 ### Conclusiones
-* Si bien OpenMP es mas versátil a la hora de ejecutarse en una sola máquina, podemos evidenciar en este caso que al escalar un programa en MPI tiene mejores resultados que OpenMP, ya que al ejecutarlo con pocos workers la sincronización y la comunicación afectan en el rendimiento.
+* Si bien OpenMP es mas versátil a la hora de ejecutarse en una sola máquina, podemos evidenciar en este caso que al escalar un programa en MPI tiene mejores resultados que OpenMP, ya que al ejecutarlo con pocos workers la sincronización y la comunicación afectan en el rendimiento. Sin embargo la diferencia es imperceptible en este caso.
 * Con las bandera de optimización -Ofast se redujeron mas numero de instrucciones que en -O3 y con la ayuda de -Wall se arreglaron los warnings del programa. 
 
